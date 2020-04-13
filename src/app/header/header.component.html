@@ -1,0 +1,31 @@
+<div class="CronometroOnline">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-around">
+    <a href="#" class="navbar-brand" (click)="seletor = 'relogio'">Cronômetro Online</a>
+    <div class="nav-item dropdown">
+    <button
+        class="btn btn-dark"
+        href="#"
+        id="navbarDropdownMenuLink"
+        data-toggle="dropdown"
+        aria-haspopup="false"
+        aria-expanded="true"
+      >
+        Opções <span class="navbar-toggler-icon"></span>
+    </button>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color: #d0d3da; opacity: 90%;">
+        <a class="dropdown-item" href="#" (click)="seletor = 'relogio'">Relógio</a>
+        <a class="dropdown-item" href="#" (click)="seletor = 'cronometro'">Cronômetro</a>
+        <a class="dropdown-item" href="#" (click)="seletor = 'temporizador'">Temporizador</a>
+      </div>
+    </div>
+  </nav>
+</div>
+<div *ngIf="seletor === 'relogio'">
+  <app-relogio></app-relogio>
+</div>
+<div *ngIf="seletor === 'cronometro'">
+  <app-cronometro></app-cronometro>
+</div>
+<div *ngIf="seletor === 'temporizador'">
+  <app-temporizador></app-temporizador>
+</div>

@@ -1,0 +1,35 @@
+<div class="div1">
+  <div class="div3">
+    <div class="container">
+      <h1 class="relogio">Temporizador</h1>
+      <div class="form-group row">
+        <!-- <label for="example-number-input" class="col-2 col-form-label">Number</label> -->
+        <div class="temp">
+          <label>Hr</label>
+          <input class="form-control" type="number" max="23" min="0" id="hora" [(ngModel)]="hora">
+        </div>
+        <h1 style="color: antiquewhite; margin-top: 9%;">:</h1>
+        <div class="temp">
+          <label>Min</label>
+          <input class="form-control" type="number" max="59" min="0" id="minuto" [(ngModel)]="minuto">
+        </div>
+        <h1 style="color: antiquewhite; margin-top: 9%;">:</h1>
+        <div class="temp">
+          <label>Seg</label>
+          <input class="form-control" type="number" max="59" min="0" id="segundo" [(ngModel)]='segundo'>
+        </div>
+      </div>
+      <div class="div2">
+        <h1>
+          {{ addZero(dateTime.getHours()) }}:{{ addZero(dateTime.getMinutes()) }}:{{ addZero(dateTime.getSeconds()) }}
+        </h1>
+      </div>
+      <div class="botao" [ngSwitch]="botOpcao">
+        <button *ngSwitchCase="'iniciar'" class="btn btn-success" (click)="iniciarCronometro()"> Iniciar  </button>
+        <button *ngSwitchCase="'iniciado'" class="btn btn-primary" (click)="pausarCronometro()"> Pausar  </button>
+        <button *ngSwitchCase="'pausado'" class="btn btn-success" (click)="retomarCronometro()"> Retomar  </button>
+        <button *ngSwitchCase="'pausado'" class="btn btn-danger" (click)="zerarCronometro()">  Zerar   </button>
+      </div>
+    </div>
+  </div>
+</div>
