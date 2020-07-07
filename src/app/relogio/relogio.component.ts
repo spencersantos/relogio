@@ -1,28 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { RelogioService } from './../relogio.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-relogio',
   templateUrl: './relogio.component.html',
   styleUrls: ['../app.component.css']
 })
-export class RelogioComponent implements OnInit {
+export class RelogioComponent implements OnInit, OnDestroy {
 
   dateTime = new Date();
+  private subs: Subscription;
 
-  ngOnInit(): void {
+  constructor(private relogioService: RelogioService) { }
+
+
+  ngOnInit() {
+    this.subs = this.relogioService.dateTime.subscribe(
+      (date: Date) => {
+        this.dateTime = date;
+      }
+    );
   }
 
-  constructor() {
-    setInterval(() => {
-      this.dateTime = new Date();
-    }, 100);
-}
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
 
-addZero(numero: number){
-  if (numero < 10) {
-    return '0' + numero;
-  } else { return numero; }
-}
+  addZero(numero: number) {
+    return this.relogioService.addZero(numero);
+  }
 
 }

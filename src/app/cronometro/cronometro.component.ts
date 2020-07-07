@@ -1,53 +1,62 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { CronometroService } from './../cronometro.service';
+import { RelogioService } from './../relogio.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cronometro',
   templateUrl: './cronometro.component.html',
   styleUrls: ['../app.component.css']
 })
-export class CronometroComponent implements OnInit {
+export class CronometroComponent implements OnInit, OnDestroy {
 
   dateTime = new Date();
-  botOpcao = 'iniciar';
-  contador: any;
-  subject = new Subject<number>();
+  botOpcao: string;
+  contador: Subscription;
+  contNumber: any;
 
-  constructor() { }
+  constructor( private cronometroService: CronometroService) { }
+
 
   ngOnInit(): void {
     this.dateTime.setHours(0, 0, 0, 0);
+
+    this.contador = this.cronometroService.dateTime.subscribe(
+      (date: Date) => {
+        this.dateTime = date;
+      }
+    );
+    this.cronometroService.botOpcao.subscribe(
+      (func: string) => {
+        this.botOpcao = func;
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.contador.unsubscribe();
   }
 
 addZero(numero: number){
-  if (numero < 10) {
-    return '0' + numero;
-  } else { return numero; }
+  return this.cronometroService.addZero(numero);
 }
 
 iniciarCronometro() {
-  this.botOpcao = 'iniciado';
-  this.contador = setInterval(() => {
-    this.dateTime.setTime(this.dateTime.getTime() + 5 * 100);
-  }, 500);
+  this.contNumber = this.cronometroService.iniciarCronometro();
 }
 
 pausarCronometro() {
-  this.botOpcao = 'pausado';
-  clearInterval(this.contador);
+  this.ngOnDestroy();
+  this.cronometroService.pausarCronometro();
 }
 
 retomarCronometro() {
-  this.botOpcao = 'iniciado';
-  this.contador = setInterval(() => {
-    this.dateTime.setTime(this.dateTime.getTime() + 5 * 100);
-  }, 500);
+  this.cronometroService.retomarCronometro();
 }
 
 zerarCronometro() {
-  this.botOpcao = 'iniciar';
-  clearInterval(this.contador);
-  this.dateTime.setHours(0, 0, 0, 0);
+  this.cronometroService.zerarCronometro();
+  this.ngOnDestroy();
 }
 
 }

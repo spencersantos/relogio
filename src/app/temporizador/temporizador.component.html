@@ -25,7 +25,7 @@
         </h1>
       </div>
       <div class="botao" [ngSwitch]="botOpcao">
-        <button *ngSwitchCase="'iniciar'" class="btn btn-success" (click)="iniciarCronometro()"> Iniciar  </button>
+        <button *ngSwitchCase="'iniciar'" class="btn btn-success" (click)="iniciarTemporizador()"> Iniciar  </button>
         <button *ngSwitchCase="'iniciado'" class="btn btn-primary" (click)="pausarCronometro()"> Pausar  </button>
         <button *ngSwitchCase="'pausado'" class="btn btn-success" (click)="retomarCronometro()"> Retomar  </button>
         <button *ngSwitchCase="'pausado'" class="btn btn-danger" (click)="zerarCronometro()">  Zerar   </button>
