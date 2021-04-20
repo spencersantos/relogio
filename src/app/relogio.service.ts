@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,11 +7,16 @@ import { Subject } from 'rxjs';
 export class RelogioService {
 
   dateTime = new Subject<Date>();
+  state = new Subject<string>();
 
   constructor() {
     setInterval(() => {
       this.dateTime.next(new Date());
     }, 100);
+  }
+
+  stateOutRelogio() {
+    this.state.next('out');
   }
 
   addZero(numero: number){
